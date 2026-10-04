@@ -308,7 +308,7 @@ function plantIdErrorWords(error) {
   if (error.status === 429) return "We used up today's free plant checks. Try again tomorrow, or try a sample.";
   if (error.status === 400 || error.status === 413 || error.status === 415) return "The AI couldn't read this photo. Go back and try a different photo.";
   if (!navigator.onLine) return "No internet. The plant AI needs internet. You can still try a sample.";
-  return "Couldn't reach the plant AI. Check the internet, then tap Try again.";
+  return "The plant AI isn't answering right now. Tap Try again in a minute, or go back to Step 1 and try a sample.";
 }
 
 // Ask the AI about the photo (unless we already know the answer), then show the result.
