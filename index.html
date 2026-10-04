@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2e7d32">
+  <title>Invasive Plant Reporter</title>
+  <!-- The little leaf icon on the browser tab, drawn from an emoji so we don't need an image file. -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <!-- Leaflet draws the map. exifr reads the hidden GPS info inside photos.
+       "integrity" is a fingerprint: the browser refuses the file if anyone changed it. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+        integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+          integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/lite.umd.js"
+          integrity="sha384-KRanV2NRwHPanp7iM6nlLQC5jPCTscSYMko30dLJHzNXJaUNtcucWv+SOi3jV3PE" crossorigin="anonymous" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>🌿 Invasive Plant Reporter</h1>
+    <button id="about-button" class="icon-button" aria-label="About this app">ℹ️</button>
+    <button id="settings-button" class="icon-button" aria-label="Settings">⚙️</button>
+  </header>
+  <!-- Always shows where reports will go: the test address or the real DNR. Tap it to open Settings. -->
+  <button id="mode-banner" class="banner test">🧪 Test mode: practice only</button>
+
+  <main>
+    <!-- Screen 1: take or pick a photo -->
+    <section id="screen-photo">
+      <!-- A short "what is this app?" note. It hides after a photo is picked, to make room. -->
+      <div id="intro" class="intro">
+        <p><strong>Found a plant that might be invasive?</strong>
+          Snap a photo. We'll check Wisconsin's invasive plant list and help you report it to the DNR.
+          <button class="link-button" id="intro-about">How does this work?</button></p>
+      </div>
+      <p class="step">Step 1 of 4</p>
+      <h2>Take a photo of the plant</h2>
+      <p id="photo-tip">Tap <strong>📷 Take photo</strong>. Get close and show the leaves clearly.</p>
+      <img id="photo-preview" alt="The plant photo you picked" hidden>
+      <div class="actions">
+        <!-- A label wrapped around a file input works like a button that opens the camera or photos. -->
+        <div class="row">
+          <label class="big" id="photo-camera-label">📷 Take photo
+            <input type="file" id="photo-camera" accept="image/*" capture="environment">
+          </label>
+          <label class="small">🖼️ My photos
+            <input type="file" id="photo-gallery" accept="image/*">
+          </label>
+        </div>
+        <button class="link-button" id="sample-button" hidden>🧪 No plant nearby? Try a sample</button>
+        <button class="big" id="photo-next" data-go="location" hidden>Next →</button>
+      </div>
+    </section>
+
+    <!-- Screen 2: where is the plant? -->
+    <section id="screen-location">
+      <p class="step">Step 2 of 4</p>
+      <h2>Where is the plant?</h2>
+      <p id="location-tip">Standing next to it? Tap <strong>📍 Find me</strong>. Or tap the map where the plant is.</p>
+      <div id="map" role="application" aria-label="Map. Tap where the plant is."></div>
+      <div class="actions">
+        <div class="row">
+          <button class="small" data-go="photo">← Back</button>
+          <button class="big" id="gps-button">📍 Find me</button>
+        </div>
+        <button class="big" id="location-next" data-go="result" hidden>Next →</button>
+      </div>
+    </section>
+
+    <!-- Screen 3: what plant is it? -->
+    <section id="screen-result">
+      <p class="step">Step 3 of 4</p>
+      <h2>What plant is it?</h2>
+      <p id="result-tip" aria-live="polite"></p>
+      <div id="result-card" class="card" hidden></div>
+      <div id="guesses-box" hidden>
+        <h3>The AI's top guesses</h3>
+        <ol id="guesses"></ol>
+      </div>
+      <div class="actions">
+        <button class="big" id="result-next" data-go="report" hidden>✉️ Report to DNR</button>
+        <div class="row">
+          <button class="small" data-go="location">← Back</button>
+          <button class="small" id="retry-button" hidden>🔄 Try again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 4: send the report -->
+    <section id="screen-report">
+      <p class="step">Step 4 of 4</p>
+      <h2>Send your report</h2>
+      <p id="report-to" class="mode-note"></p>
+      <ol class="todo">
+        <li><strong>Add notes</strong> (if you want). How many plants? How big is the patch?
+          <textarea id="report-notes" rows="2" placeholder="Example: About 20 plants along the trail."></textarea></li>
+        <li><strong>Save your photo</strong> so you can attach it.
+          <a id="save-photo" class="small button-link" download="plant-photo.jpg">💾 Save photo</a></li>
+        <li>Tap <strong>✉️ Open email</strong>. Everything is filled in for you.</li>
+        <li><strong>Attach your photo</strong>, read the email, then press <strong>Send</strong>.</li>
+      </ol>
+      <details id="report-details">
+        <summary>See the report</summary>
+        <pre id="report-text"></pre>
+      </details>
+      <p class="hint">The DNR may also ask you to fill out their
+        <a href="https://apps.dnr.wi.gov/doclink/forms/1700-056.pdf" target="_blank" rel="noopener">Invasive Plant Report Form</a>.</p>
+      <p><button class="link-button" id="start-over">🔁 Done? Start a new report</button></p>
+      <div class="actions">
+        <a id="email-link" class="big button-link" href="#">✉️ Open email</a>
+        <div class="row">
+          <button class="small" data-go="result">← Back</button>
+          <button class="small" id="copy-button">📋 Copy report</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- The Settings box. It pops up over the app. -->
+  <dialog id="settings">
+    <form method="dialog">
+      <h2>⚙️ Settings</h2>
+      <label class="switch"><input type="checkbox" id="test-mode" checked> <strong>Test mode</strong></label>
+      <p class="hint"><strong>ON:</strong> practice reports go to test@example.com.<br>
+        <strong>OFF:</strong> reports go to the real Wisconsin DNR.<br>
+        Test mode turns back on every time you open the app or start a new report.</p>
+      <button class="big" value="done">Done</button>
+    </form>
+  </dialog>
+
+  <!-- The sample picker. Each sample is a real photo with a saved AI answer, so it works without internet. -->
+  <dialog id="sample-picker">
+    <form method="dialog">
+      <h2>🧪 Try a sample</h2>
+      <p class="hint">Real plant photos with saved answers. They work without internet, and always in test mode.</p>
+      <div id="sample-buttons" class="sample-grid"></div>
+      <button class="small" value="cancel">Cancel</button>
+    </form>
+  </dialog>
+
+  <!-- The About box: everything about how the app works, where data goes, and who made what. -->
+  <dialog id="about">
+    <form method="dialog">
+      <h2>ℹ️ About this app</h2>
+
+      <h3>What it does</h3>
+      <p>It helps you spot plants that might be <strong>invasive</strong> (plants from other places that crowd out
+        Wisconsin's own plants) and report them to the Wisconsin DNR.</p>
+
+      <h3>How to use it</h3>
+      <ol>
+        <li><strong>Photo:</strong> take a clear, close photo of the leaves or flowers.</li>
+        <li><strong>Location:</strong> tap "Find me" or tap the map where the plant is.</li>
+        <li><strong>What plant is it?</strong> The Pl@ntNet AI guesses, and we check Wisconsin's invasive plant list.</li>
+        <li><strong>Report:</strong> we write the email. You attach the photo, read it, and press Send.</li>
+      </ol>
+
+      <h3>The AI can be wrong</h3>
+      <p>That's why we always say <strong>"possible"</strong> and show how sure the AI is.
+        Experts at the DNR make the final call. You can report any plant, even if the app isn't sure.</p>
+
+      <h3>Stay safe</h3>
+      <p>Don't touch plants you don't know. Wild parsnip and giant hogweed can burn skin, and poison hemlock is very
+        poisonous. Explore with an adult and stay on public land.</p>
+
+      <h3>Where your photo and location go</h3>
+      <ul>
+        <li>Your <strong>photo</strong> is made smaller and sent through our plant helper to Pl@ntNet to be identified.
+          Nothing is saved, and there's no login.</li>
+        <li>Your <strong>location</strong> stays on your phone until you send the email yourself.</li>
+        <li>The <strong>map pictures</strong> come from OpenStreetMap, so they can tell roughly which area you're looking at.</li>
+      </ul>
+
+      <h3>Test mode</h3>
+      <p>Test mode is ON every time the app opens. Practice reports go to a pretend address (test@example.com),
+        so they never bother the DNR. Turn it off in ⚙️ Settings only for a real plant.</p>
+
+      <h3>How reports reach the DNR</h3>
+      <p>The DNR asks people to email <strong>Invasive.Species@wisconsin.gov</strong> with photos.
+        <a href="https://dnr.wisconsin.gov/topic/Invasives/report" target="_blank" rel="noopener">DNR: Report invasive species</a></p>
+
+      <h3>Sources and credits</h3>
+      <ul id="credits">
+        <li>Invasive plant list: Wisconsin rule
+          <a href="https://docs.legis.wisconsin.gov/code/admin_code/nr/001/40" target="_blank" rel="noopener">NR 40</a> (November 2024).</li>
+        <li>Plant AI: <a href="https://plantnet.org" target="_blank" rel="noopener">Pl@ntNet</a>.</li>
+        <li>Map: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a> contributors,
+          drawn with <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>.</li>
+        <li>Photo GPS reader: <a href="https://github.com/MikeKovarik/exifr" target="_blank" rel="noopener">exifr</a>.</li>
+      </ul>
+      <p class="hint">Made by a FIRST LEGO League team for our Innovation Project.</p>
+      <button class="big" value="close">Close</button>
+    </form>
+  </dialog>
+</body>
+</html>

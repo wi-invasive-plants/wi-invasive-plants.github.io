@@ -1,0 +1,113 @@
+{
+  "about": "Demo mode samples. Real photos from Wikimedia Commons (credits below) with REAL answers saved from the Pl@ntNet AI on 2026-10-04, so the demo works with no internet. Locations are public parks and landmarks, never anyone's home.",
+  "samples": [
+    {
+      "name": "Garlic mustard",
+      "photo": "garlic-mustard.jpg",
+      "location": {
+        "lat": 43.4194,
+        "lon": -89.7329
+      },
+      "guesses": [
+        {
+          "scientificName": "Alliaria petiolata",
+          "commonName": "Garlic Mustard",
+          "score": 0.9594
+        },
+        {
+          "scientificName": "Lunaria rediviva",
+          "commonName": "Perennial honesty",
+          "score": 0.0034
+        },
+        {
+          "scientificName": "Iberis amara",
+          "commonName": "Wild candytuft",
+          "score": 0.002
+        }
+      ],
+      "credit": "Photo: Robert Flogaus-Faust, CC BY 4.0, Wikimedia Commons",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Alliaria_petiolata_4_RF.jpg"
+    },
+    {
+      "name": "Wild parsnip",
+      "photo": "wild-parsnip.jpg",
+      "location": {
+        "lat": 42.9817,
+        "lon": -91.1145
+      },
+      "guesses": [
+        {
+          "scientificName": "Pastinaca sativa",
+          "commonName": "Wild parsnip",
+          "score": 0.7942
+        },
+        {
+          "scientificName": "Afroligusticum claessensii",
+          "commonName": "Afroligusticum claessensii",
+          "score": 0.008
+        },
+        {
+          "scientificName": "Polytaenia texana",
+          "commonName": "Texas prairie parsley",
+          "score": 0.006
+        }
+      ],
+      "credit": "Photo: Силаева Татьяна Борисовна, CC0, Wikimedia Commons",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Pastinaca_sativa_146613743.jpg"
+    },
+    {
+      "name": "Golden Alexanders",
+      "photo": "golden-alexanders.jpg",
+      "location": {
+        "lat": 43.0747,
+        "lon": -89.3841
+      },
+      "guesses": [
+        {
+          "scientificName": "Zizia aptera",
+          "commonName": "Meadow zizia",
+          "score": 0.4277
+        },
+        {
+          "scientificName": "Zizia aurea",
+          "commonName": "Golden Alexander",
+          "score": 0.3524
+        },
+        {
+          "scientificName": "Thaspium barbinode",
+          "commonName": "Hairyjoint meadowparsnip",
+          "score": 0.0977
+        }
+      ],
+      "credit": "Photo: Cbaile19, CC0, Wikimedia Commons",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Zizia_aurea,_Bird_Park,_2026-04-21-1.jpg"
+    },
+    {
+      "name": "Milkweed",
+      "photo": "milkweed.jpg",
+      "location": {
+        "lat": 45.149,
+        "lon": -87.2124
+      },
+      "guesses": [
+        {
+          "scientificName": "Asclepias syriaca",
+          "commonName": "Common milkweed",
+          "score": 0.4877
+        },
+        {
+          "scientificName": "Asclepias sullivantii",
+          "commonName": "Prairie milkweed",
+          "score": 0.396
+        },
+        {
+          "scientificName": "Asclepias speciosa",
+          "commonName": "Showy milkweed",
+          "score": 0.053
+        }
+      ],
+      "credit": "Photo: Cbaile19, CC0, Wikimedia Commons",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Asclepias_syriaca,_2021-07-04,_Bethel_Park,_01.jpg"
+    }
+  ]
+}

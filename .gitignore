@@ -1,0 +1,5 @@
+# Files that should never be uploaded to GitHub.
+# Claude Code's own settings for this computer:
+.claude/
+# A hidden file Macs make in folders:
+.DS_Store

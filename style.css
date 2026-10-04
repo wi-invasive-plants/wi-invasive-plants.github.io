@@ -1,0 +1,541 @@
+/* Colors we use everywhere, kept in one place so they are easy to change. */
+:root {
+  --green: #2e7d32;
+  --green-dark: #1b5e20;
+  --cream: #fbf8ef;
+  --text: #1f2a1f;
+  --gray: #5f6b5f;
+}
+
+/* Hidden screens must stay hidden, no matter what other rules say. */
+[hidden] {
+  display: none !important;
+}
+
+/* Big, easy-to-read text on a soft background. */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--cream);
+  -webkit-text-size-adjust: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The green bar at the top. Extra padding keeps it clear of the phone's notch. */
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green);
+  color: white;
+  padding: 8px 8px 8px 16px;
+  padding-top: max(8px, env(safe-area-inset-top));
+}
+
+header h1 {
+  flex: 1;
+  margin: 0;
+  font-size: 20px;
+}
+
+/* The gear button for Settings. */
+.icon-button {
+  min-height: 48px;
+  width: 48px;
+  background: none;
+  border: none;
+  font-size: 26px;
+}
+
+/* The strip under the header that says where reports go. Yellow = test, red = real DNR. */
+.banner {
+  min-height: 36px;
+  border: none;
+  border-radius: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Yellow = test mode, red = real DNR. Used by the banner and the note on the report screen. */
+.banner.test,
+.mode-note.test {
+  background: #fff3c4;
+  color: #5d4300;
+}
+
+.banner.real,
+.mode-note.real {
+  background: #b71c1c;
+  color: white;
+}
+
+/* Keep content a comfy width, even on a big screen, and fill the phone's height. */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 16px 0;
+  box-sizing: border-box;
+}
+
+/* Each screen fills the space so its buttons can sit at the very bottom. */
+main > section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Even spacing between the words on each screen. */
+main > section p,
+main > section h2 {
+  margin: 0 0 12px;
+}
+
+/* The welcome note on the first screen. */
+.intro {
+  background: white;
+  border-left: 6px solid var(--green);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 18px;
+}
+
+.intro strong {
+  display: block;
+  color: var(--green-dark);
+}
+
+.intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* The sample picker: two picture buttons per row. */
+.sample-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sample {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 6px;
+  overflow: hidden;
+  background: white;
+  color: var(--green-dark);
+  border: 2px solid var(--green);
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.sample img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  margin-bottom: 4px;
+}
+
+/* "Step 1 of 4" label. */
+.step {
+  margin: 0;
+  color: var(--gray);
+  font-size: 16px;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+/* Buttons stick to the bottom of the screen, where a thumb can reach them one-handed. */
+.actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: auto -16px 0;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: var(--cream);
+  border-top: 1px solid #e3dfd2;
+  z-index: 1;
+}
+
+/* All buttons are large and easy to tap. Quick taps never zoom the page.
+   Photo labels and link-buttons use the same look, so they feel like buttons too. */
+button,
+label.big,
+label.small,
+a.button-link {
+  font: inherit;
+  min-height: 56px;
+  border-radius: 14px;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Center the words inside photo labels and link-buttons, like a button does. */
+label.big,
+label.small,
+a.button-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The main button on each screen. */
+.big {
+  background: var(--green);
+  color: white;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.big:active {
+  background: var(--green-dark);
+}
+
+/* Less important buttons, like "Back". */
+.small {
+  background: white;
+  color: var(--green-dark);
+  border: 2px solid var(--green);
+}
+
+/* Hide the plain file box; the label around it is what people tap. */
+label input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+/* Two buttons side by side, to save space on small phones. */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.row label {
+  padding: 4px 8px;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* Show a clear outline when someone uses a keyboard to reach a photo label. */
+label:has(input:focus-visible) {
+  outline: 3px solid var(--green-dark);
+  outline-offset: 3px;
+}
+
+/* The photo grows or shrinks to fill the space left, so the buttons never cover it. */
+#photo-preview {
+  flex: 1 1 0;
+  min-height: 120px;
+  max-height: 50vh;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+/* The map fills the space between the tip and the buttons. */
+#map {
+  flex: 1 1 0;
+  min-height: 160px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  z-index: 0; /* keeps the map's own layers under our buttons */
+}
+
+/* Smaller gray text for extra info. */
+.hint {
+  font-size: 16px;
+  color: var(--gray);
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+/* The big answer card on the result screen. Its color depends on the answer. */
+.card {
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 3px solid var(--gray);
+  background: white;
+}
+
+.card p {
+  margin: 0 0 8px;
+}
+
+.card.invasive {
+  border-color: #e65100;
+  background: #fff4e5;
+}
+
+.card.not-listed {
+  border-color: var(--green);
+}
+
+.plant-name {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Scientific names are written in italics. */
+.science-name {
+  font-style: italic;
+  color: var(--gray);
+}
+
+/* "Don't touch!" warnings stand out in red. */
+.warning {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #b71c1c;
+  color: white;
+  font-weight: bold;
+}
+
+/* The list of the AI's top guesses. */
+#guesses {
+  margin: 0 0 16px;
+  padding-left: 28px;
+}
+
+#guesses li {
+  margin-bottom: 12px;
+}
+
+#guesses li > span {
+  display: block;
+}
+
+.guess-name {
+  font-weight: bold;
+}
+
+/* "On WI list" label next to a guess. */
+#guesses .tag {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 8px;
+  border-radius: 10px;
+  background: #e65100;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* The bar that shows how sure the AI is. */
+.bar {
+  height: 12px;
+  border-radius: 6px;
+  background: #e3dfd2;
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+}
+
+/* The "where does this email go?" note on the report screen. */
+.mode-note {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* The numbered to-do list on the report screen. */
+.todo {
+  margin: 0 0 12px;
+  padding-left: 28px;
+}
+
+.todo li {
+  margin-bottom: 12px;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 6px;
+  padding: 10px;
+  border: 2px solid var(--gray);
+  border-radius: 10px;
+  font: inherit;
+}
+
+/* Links that look like buttons, like "Open email" and "Save photo". */
+a.button-link {
+  text-decoration: none;
+}
+
+.todo a.button-link {
+  margin-top: 6px;
+}
+
+/* The full report text, which you can open to read. */
+details {
+  margin-bottom: 12px;
+}
+
+summary {
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--green-dark);
+  font-weight: bold;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 15px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* A button that looks like a plain link. */
+.link-button {
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--green-dark);
+  text-decoration: underline;
+}
+
+/* The Settings box that pops up over the app. */
+dialog {
+  width: min(92vw, 480px);
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  background: var(--cream);
+  color: var(--text);
+}
+
+/* The About box and sample picker can be long, so they scroll inside. */
+#about,
+#sample-picker {
+  max-height: 88dvh;
+  overflow-y: auto;
+}
+
+dialog h3 {
+  margin: 10px 0 0;
+  font-size: 19px;
+}
+
+dialog ul,
+dialog ol {
+  margin: 0;
+  padding-left: 22px;
+}
+
+dialog li {
+  margin-bottom: 4px;
+}
+
+/* "How does this work?" link inside the welcome note. */
+.intro .link-button {
+  display: inline-block;
+  font-size: 18px;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+dialog h2,
+dialog p {
+  margin: 0;
+}
+
+/* The test mode on/off switch: a big checkbox that's easy to tap. */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-top: 8px;
+}
+
+.switch input {
+  width: 28px;
+  height: 28px;
+}
+
+/* Short phones (like the small iPhone SE): tighten the spacing so each screen still fits. */
+@media (max-height: 620px) {
+  body {
+    font-size: 18px;
+  }
+
+  h2 {
+    font-size: 23px;
+  }
+
+  header h1 {
+    font-size: 18px;
+  }
+
+  .banner {
+    min-height: 30px;
+    font-size: 14px;
+  }
+
+  .intro,
+  .intro .link-button {
+    font-size: 16px;
+  }
+
+  main {
+    padding-top: 10px;
+  }
+
+  main > section p,
+  main > section h2 {
+    margin-bottom: 8px;
+  }
+
+  button,
+  label.big,
+  label.small,
+  a.button-link {
+    min-height: 50px;
+  }
+
+  .actions {
+    gap: 8px;
+    padding-top: 8px;
+  }
+}
