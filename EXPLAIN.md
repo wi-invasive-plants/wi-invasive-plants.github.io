@@ -39,7 +39,7 @@ Our app helps: **take a photo → find out if it might be invasive → send a re
 - **Prohibited:** not common in Wisconsin yet. If we find it early, the DNR can stop it. These reports matter most!
 - **Restricted:** already common in parts of Wisconsin. It's against the law to sell it, move it, or plant it.
 - **Confidence ("% sure"):** how sure the AI is about its guess. Under 20%, we say "The AI isn't sure."
-- **Test mode:** a practice switch. When it's on, reports go to a pretend address, so practice never bothers the real DNR.
+- **Practice mode:** when the app shows 🧪 Practice, reports go to a pretend address, so practice never bothers the real DNR. Only our team can switch the app to real reports (one line in `app.js`). Users can't, so nobody sends a real report by accident.
 - **API key:** like a library card for the plant AI. It lets us use Pl@ntNet, up to 500 checks a day. It's a secret, so only our plant helper has it.
 - **Plant helper:** a tiny program in the cloud that holds the key, like a locker. The app asks the helper, and the helper asks Pl@ntNet.
 
@@ -58,7 +58,7 @@ It stays on your phone until the AI step. Then a smaller copy goes through our p
 A login means storing people's names and passwords, and keeping those safe is a big job. Our app doesn't need to know who you are to help find invasive plants, so we left it out. Safer and simpler!
 
 **How does the DNR get the report?**
-The DNR asks people to email Invasive.Species@wisconsin.gov. Our app writes that email for you: plant name, how sure the AI was, date, location, a map link, and your notes. **You** attach the photo, read it, and press Send. The app never sends anything by itself. When we practice, test mode sends it to a pretend address instead.
+The DNR asks people to email Invasive.Species@wisconsin.gov. Our app writes that email for you: plant name, how sure the AI was, date, location, a map link, and your notes. **You** attach the photo, read it, and press Send. The app never sends anything by itself. While the app is in practice mode, it goes to a pretend address instead. Our team decides when the app sends real reports.
 
 **How would you make it better?**
 - Add more plants to the list (the law lists over 100!)

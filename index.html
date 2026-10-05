@@ -21,10 +21,9 @@
 <body>
   <header>
     <h1>🌿 <span class="wide-only">Invasive </span>Plant Reporter</h1>
-    <!-- Small tag that always shows where reports go: Practice (test address) or Real (the DNR). Tap it for Settings. -->
-    <button id="mode-tag" class="mode-tag test">🧪 Practice</button>
+    <!-- Shows when reports go to the test address instead of the DNR. Our team sets this in app.js. -->
+    <span id="mode-tag" class="mode-tag test" title="Practice: reports go to a test address, not the DNR">🧪 Practice</span>
     <button id="about-button" class="icon-button" aria-label="About this app">ℹ️</button>
-    <button id="settings-button" class="icon-button" aria-label="Settings">⚙️</button>
   </header>
 
   <main>
@@ -119,18 +118,6 @@
     </section>
   </main>
 
-  <!-- The Settings box. It pops up over the app. -->
-  <dialog id="settings">
-    <form method="dialog">
-      <h2>⚙️ Settings</h2>
-      <label class="switch"><input type="checkbox" id="test-mode" checked> <strong>Test mode</strong></label>
-      <p class="hint"><strong>ON:</strong> practice reports go to test@example.com.<br>
-        <strong>OFF:</strong> reports go to the real Wisconsin DNR.<br>
-        Test mode turns back on every time you open the app or start a new report.</p>
-      <button class="big" value="done">Done</button>
-    </form>
-  </dialog>
-
   <!-- The sample picker. Each sample is a real photo with a saved AI answer, so it works without internet. -->
   <dialog id="sample-picker">
     <form method="dialog">
@@ -174,9 +161,9 @@
         <li>The <strong>map pictures</strong> come from OpenStreetMap, so they can tell roughly which area you're looking at.</li>
       </ul>
 
-      <h3>Test mode</h3>
-      <p>Test mode is ON every time the app opens. Practice reports go to a pretend address (test@example.com),
-        so they never bother the DNR. Turn it off in ⚙️ Settings only for a real plant.</p>
+      <h3>Practice or real?</h3>
+      <p>When you see <strong>🧪 Practice</strong> at the top, reports go to a pretend address (test@example.com),
+        so they never bother the DNR. Our team decides when the app sends real reports. Samples are always practice.</p>
 
       <h3>How reports reach the DNR</h3>
       <p>The DNR asks people to email <strong>Invasive.Species@wisconsin.gov</strong> with photos.

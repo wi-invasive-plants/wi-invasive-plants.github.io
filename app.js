@@ -1,6 +1,6 @@
 // ============================================================
 // Invasive Plant Reporter
-// Sections: 1 Screens · 2 Settings · 3 Photo · 4 Location · 5 Invasive list
+// Sections: 1 Screens · 2 Practice or real · 3 Photo · 4 Location · 5 Invasive list
 //           6 Plant ID · 7 Result · 8 Report · 9 Samples · 10 Start
 // ============================================================
 
@@ -29,38 +29,29 @@ function setUpNavButtons() {
 }
 
 
-// ===== 2. Settings =====
+// ===== 2. Practice or real =====
 
-// Where reports go. Test mode uses example.com, a made-up address that can never reach anyone.
+// Where reports go. Practice uses example.com, a made-up address that can never reach anyone.
 const TEST_EMAIL = "test@example.com";
 const DNR_EMAIL = "Invasive.Species@wisconsin.gov";
 
-// Test mode is ON every time the app opens, so practice reports never reach the DNR by accident.
-let testMode = true;
+// OUR TEAM decides this, not the people using the app.
+// true  = practice: every report goes to test@example.com.
+// false = real: reports go to the Wisconsin DNR.
+// Change it only when the team is ready for real reports, then push to GitHub.
+const PRACTICE_SITE = true;
 
-// Update the small tag in the header that says where reports will go.
+// Practice if the whole site is in practice, or if the address ends with "?practice" (our team's practice link).
+function startsInPractice() {
+  return PRACTICE_SITE || new URLSearchParams(location.search).has("practice");
+}
+
+// Is this report practice? Samples always are.
+let testMode = startsInPractice();
+
+// Show the small "Practice" tag in the header when reports go to the test address.
 function showModeTag() {
-  const tag = document.getElementById("mode-tag");
-  tag.textContent = testMode ? "🧪 Practice" : "📮 Real";
-  tag.className = testMode ? "mode-tag test" : "mode-tag real";
-  tag.ariaLabel = testMode ? "Test mode is on: reports go to a test address. Tap to change." : "Real mode: reports go to the DNR. Tap to change.";
-}
-
-// Open the Settings box, showing whether test mode is on.
-function openSettings() {
-  document.getElementById("test-mode").checked = testMode;
-  document.getElementById("settings").showModal();
-}
-
-// When the test mode switch is flipped, ask "are you sure?" before turning it off.
-function changeTestMode(event) {
-  const box = event.target;
-  if (!box.checked && !confirm("Turn off test mode?\n\nReports will go to the REAL Wisconsin DNR. Only do this for a real plant.")) {
-    box.checked = true;
-  }
-  testMode = box.checked;
-  showModeTag();
-  updateReport();
+  document.getElementById("mode-tag").hidden = !testMode;
 }
 
 // Open the About box (how the app works, where data goes, credits).
@@ -68,11 +59,8 @@ function openAbout() {
   document.getElementById("about").showModal();
 }
 
-// Hook up the Settings and About buttons, the mode tag, and the test mode switch.
-function setUpSettings() {
-  document.getElementById("settings-button").addEventListener("click", openSettings);
-  document.getElementById("mode-tag").addEventListener("click", openSettings);
-  document.getElementById("test-mode").addEventListener("change", changeTestMode);
+// Hook up the About and sample buttons.
+function setUpTopButtons() {
   document.getElementById("about-button").addEventListener("click", openAbout);
   document.getElementById("intro-about").addEventListener("click", openAbout);
   document.getElementById("sample-button").addEventListener("click", openSamples);
@@ -584,7 +572,7 @@ const FIRST_TIPS = {};
 // Clear everything for a new report. (We don't reload the page, so this works without internet.)
 function startOver() {
   photoFile = guesses = guessesFor = plantLocation = decision = null;
-  testMode = true; // every new report starts in test mode
+  testMode = startsInPractice(); // back to the site's normal mode
   showModeTag();
   if (pin) pin.remove();
   pin = null;
@@ -605,7 +593,7 @@ function startOver() {
 function start() {
   for (const id of ["photo-tip", "location-tip"]) FIRST_TIPS[id] = document.getElementById(id).innerHTML;
   setUpNavButtons();
-  setUpSettings();
+  setUpTopButtons();
   setUpPhotoButtons();
   setUpReport();
   document.getElementById("gps-button").addEventListener("click", findMe);

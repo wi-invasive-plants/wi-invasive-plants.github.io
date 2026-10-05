@@ -43,7 +43,7 @@ header h1 {
   font-size: 20px;
 }
 
-/* The gear button for Settings. */
+/* The round ℹ️ button in the header. */
 .icon-button {
   min-height: 48px;
   width: 48px;
@@ -52,25 +52,22 @@ header h1 {
   font-size: 26px;
 }
 
-/* The small tag in the header that says where reports go. Yellow = practice, red = real DNR. */
+/* The small "Practice" tag in the header. */
 .mode-tag {
-  min-height: 34px;
-  padding: 0 10px;
-  border: none;
+  padding: 6px 10px;
   border-radius: 17px;
   font-size: 14px;
   font-weight: bold;
   white-space: nowrap;
 }
 
-/* Yellow = test mode, red = real DNR. Used by the header tag and the note on the report screen. */
+/* Yellow = practice, red = real DNR. Used by the header tag and the note on the report screen. */
 .mode-tag.test,
 .mode-note.test {
   background: #fff3c4;
   color: #5d4300;
 }
 
-.mode-tag.real,
 .mode-note.real {
   background: #b71c1c;
   color: white;
@@ -433,7 +430,7 @@ pre {
   text-decoration: underline;
 }
 
-/* The Settings box that pops up over the app. */
+/* Boxes that pop up over the app (About and the sample picker). */
 dialog {
   width: min(92vw, 480px);
   border: none;
@@ -486,19 +483,6 @@ dialog p {
   margin: 0;
 }
 
-/* The test mode on/off switch: a big checkbox that's easy to tap. */
-.switch {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  margin-top: 8px;
-}
-
-.switch input {
-  width: 28px;
-  height: 28px;
-}
 
 /* Narrow phones: a shorter title and slimmer icons, so the header stays on one or two lines. */
 @media (max-width: 430px) {

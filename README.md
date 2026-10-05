@@ -79,11 +79,19 @@ The plant helper is `plant-helper.js`: a tiny program that runs on Cloudflare, n
 - **Remaining risk:** a determined person could write a program that pretends to be our website and use the helper to identify plants. That uses up our 500 free checks for the day, and then the app says "We used up today's free plant checks." They still can't see the key, and there's no money involved on free plans. For extra protection, an adult can add a Cloudflare rate-limiting rule.
 - **Photos pass through Cloudflare** on their way to Pl@ntNet. The helper doesn't save them (you can read every line of `plant-helper.js`).
 
-## Test mode (stops practice from reaching the DNR)
+## Practice or real (our team controls this)
 
-- **Test mode is ON every time the app opens, and every time you start a new report.** Practice emails go to `test@example.com`, an address that's reserved so it can never reach anyone.
-- A small yellow **🧪 Practice** tag in the header shows test mode is on. When test mode is off, it turns into a red **📮 Real** tag. The report screen always says exactly where the email will go.
-- To send a real report, tap ⚙️, untick **Test mode**, and confirm. Samples always use test mode.
+People using the app **can't** switch between practice and real. Our team decides, with one line in `app.js`:
+
+```js
+const PRACTICE_SITE = true;   // true = practice, false = real reports to the DNR
+```
+
+- **`true` (now): practice.** Every report email goes to `test@example.com`, an address that's reserved so it can never reach anyone. A small yellow **🧪 Practice** tag shows in the header.
+- **`false`: real.** Report emails go to the Wisconsin DNR, and the Practice tag disappears. The report screen always says exactly where the email will go.
+- **To switch:** change the line, then run `git commit -am "Switch to real reports"` and `git push`. The website updates in about a minute. GitHub keeps a record of who switched it and when.
+- **Team practice link:** add `?practice` to the address (`https://wi-invasive-plants.github.io/?practice`) to force practice mode, even when the site is real. It only works in the safe direction: it can turn practice **on**, never off.
+- **Samples are always practice.**
 - **Nothing is ever sent automatically.** The app opens a pre-filled email, and a person attaches the photo, reads it, and presses Send.
 
 ## Reporting to the DNR
@@ -123,7 +131,7 @@ Samples work with **no internet and no helper**. The app loads them as soon as i
 
 | File | What it does |
 |---|---|
-| `index.html` | The four screens (Photo → Location → Result → Report) plus the Settings and About boxes |
+| `index.html` | The four screens (Photo → Location → Result → Report) plus the About box and sample picker |
 | `style.css` | Colors, big buttons, phone layout |
 | `app.js` | Everything the app does, in 10 labeled sections |
 | `invasive-plants.json` | The Wisconsin invasive plant list |
