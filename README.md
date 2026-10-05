@@ -82,7 +82,7 @@ The plant helper is `plant-helper.js`: a tiny program that runs on Cloudflare, n
 ## Test mode (stops practice from reaching the DNR)
 
 - **Test mode is ON every time the app opens, and every time you start a new report.** Practice emails go to `test@example.com`, an address that's reserved so it can never reach anyone.
-- A yellow banner says "Test mode: practice only". When test mode is off, the banner turns red: "Real mode: reports go to the DNR".
+- A small yellow **🧪 Practice** tag in the header shows test mode is on. When test mode is off, it turns into a red **📮 Real** tag. The report screen always says exactly where the email will go.
 - To send a real report, tap ⚙️, untick **Test mode**, and confirm. Samples always use test mode.
 - **Nothing is ever sent automatically.** The app opens a pre-filled email, and a person attaches the photo, reads it, and presses Send.
 

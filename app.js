@@ -38,11 +38,12 @@ const DNR_EMAIL = "Invasive.Species@wisconsin.gov";
 // Test mode is ON every time the app opens, so practice reports never reach the DNR by accident.
 let testMode = true;
 
-// Update the banner under the header that says where reports will go.
-function showModeBanner() {
-  const banner = document.getElementById("mode-banner");
-  banner.textContent = testMode ? "🧪 Test mode: practice only" : "📮 Real mode: reports go to the DNR";
-  banner.className = testMode ? "banner test" : "banner real";
+// Update the small tag in the header that says where reports will go.
+function showModeTag() {
+  const tag = document.getElementById("mode-tag");
+  tag.textContent = testMode ? "🧪 Practice" : "📮 Real";
+  tag.className = testMode ? "mode-tag test" : "mode-tag real";
+  tag.ariaLabel = testMode ? "Test mode is on: reports go to a test address. Tap to change." : "Real mode: reports go to the DNR. Tap to change.";
 }
 
 // Open the Settings box, showing whether test mode is on.
@@ -58,7 +59,7 @@ function changeTestMode(event) {
     box.checked = true;
   }
   testMode = box.checked;
-  showModeBanner();
+  showModeTag();
   updateReport();
 }
 
@@ -67,15 +68,15 @@ function openAbout() {
   document.getElementById("about").showModal();
 }
 
-// Hook up the Settings and About buttons, the banner, and the test mode switch.
+// Hook up the Settings and About buttons, the mode tag, and the test mode switch.
 function setUpSettings() {
   document.getElementById("settings-button").addEventListener("click", openSettings);
-  document.getElementById("mode-banner").addEventListener("click", openSettings);
+  document.getElementById("mode-tag").addEventListener("click", openSettings);
   document.getElementById("test-mode").addEventListener("change", changeTestMode);
   document.getElementById("about-button").addEventListener("click", openAbout);
   document.getElementById("intro-about").addEventListener("click", openAbout);
   document.getElementById("sample-button").addEventListener("click", openSamples);
-  showModeBanner();
+  showModeTag();
 }
 
 
@@ -566,7 +567,7 @@ function openSamples() {
 // Use a sample: its photo, its location, and its saved AI answer (so no internet is needed).
 function useSample(sample) {
   testMode = true; // samples are always practice
-  showModeBanner();
+  showModeTag();
   usePhoto(sample.file);
   guesses = sample.guesses;
   guessesFor = sample.file;
@@ -584,7 +585,7 @@ const FIRST_TIPS = {};
 function startOver() {
   photoFile = guesses = guessesFor = plantLocation = decision = null;
   testMode = true; // every new report starts in test mode
-  showModeBanner();
+  showModeTag();
   if (pin) pin.remove();
   pin = null;
   if (map) map.setView(WISCONSIN_CENTER, 6);

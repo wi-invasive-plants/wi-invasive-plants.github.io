@@ -52,23 +52,25 @@ header h1 {
   font-size: 26px;
 }
 
-/* The strip under the header that says where reports go. Yellow = test, red = real DNR. */
-.banner {
-  min-height: 36px;
+/* The small tag in the header that says where reports go. Yellow = practice, red = real DNR. */
+.mode-tag {
+  min-height: 34px;
+  padding: 0 10px;
   border: none;
-  border-radius: 0;
-  font-size: 16px;
+  border-radius: 17px;
+  font-size: 14px;
   font-weight: bold;
+  white-space: nowrap;
 }
 
-/* Yellow = test mode, red = real DNR. Used by the banner and the note on the report screen. */
-.banner.test,
+/* Yellow = test mode, red = real DNR. Used by the header tag and the note on the report screen. */
+.mode-tag.test,
 .mode-note.test {
   background: #fff3c4;
   color: #5d4300;
 }
 
-.banner.real,
+.mode-tag.real,
 .mode-note.real {
   background: #b71c1c;
   color: white;
@@ -494,6 +496,22 @@ dialog p {
   height: 28px;
 }
 
+/* Narrow phones: a shorter title and slimmer icons, so the header stays on one or two lines. */
+@media (max-width: 430px) {
+  .wide-only {
+    display: none;
+  }
+
+  header {
+    gap: 4px;
+  }
+
+  .icon-button {
+    width: 40px;
+    font-size: 22px;
+  }
+}
+
 /* Short phones (like the small iPhone SE): tighten the spacing so each screen still fits. */
 @media (max-height: 620px) {
   body {
@@ -506,11 +524,6 @@ dialog p {
 
   header h1 {
     font-size: 18px;
-  }
-
-  .banner {
-    min-height: 30px;
-    font-size: 14px;
   }
 
   .intro,
