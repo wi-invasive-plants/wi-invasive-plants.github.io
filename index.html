@@ -21,8 +21,6 @@
 <body>
   <header>
     <h1>🌿 <span class="wide-only">Invasive </span>Plant Reporter</h1>
-    <!-- Shows when reports go to the test address instead of the DNR. Our team sets this in app.js. -->
-    <span id="mode-tag" class="mode-tag test" title="Practice: reports go to a test address, not the DNR">🧪 Practice</span>
     <button id="about-button" class="icon-button" aria-label="About this app">ℹ️</button>
   </header>
 
@@ -32,7 +30,7 @@
       <!-- A short "what is this app?" note. It hides after a photo is picked, to make room. -->
       <div id="intro" class="intro">
         <p><strong>Found a plant that might be invasive?</strong>
-          Snap a photo. We'll check Wisconsin's invasive plant list and help you report it to the DNR.
+          Snap a photo. We'll check Wisconsin's invasive plant list and show you what the DNR says about it.
           <button class="link-button" id="intro-about">How does this work?</button></p>
       </div>
       <p class="step">Step 1 of 4</p>
@@ -80,7 +78,7 @@
         <ol id="guesses"></ol>
       </div>
       <div class="actions">
-        <button class="big" id="result-next" data-go="report" hidden>✉️ Report to DNR</button>
+        <button class="big" id="result-next" data-go="learn" hidden>Learn more →</button>
         <div class="row">
           <button class="small" data-go="location">← Back</button>
           <button class="small" id="retry-button" hidden>🔄 Try again</button>
@@ -88,32 +86,22 @@
       </div>
     </section>
 
-    <!-- Screen 4: send the report -->
-    <section id="screen-report">
+    <!-- Screen 4: learn more from the DNR -->
+    <section id="screen-learn">
       <p class="step">Step 4 of 4</p>
-      <h2>Send your report</h2>
-      <p id="report-to" class="mode-note"></p>
-      <ol class="todo">
-        <li><strong>Add notes</strong> (if you want). How many plants? How big is the patch?
-          <textarea id="report-notes" rows="2" placeholder="Example: About 20 plants along the trail."></textarea></li>
-        <li><strong>Save your photo</strong> so you can attach it.
-          <a id="save-photo" class="small button-link" download="plant-photo.jpg">💾 Save photo</a></li>
-        <li>Tap <strong>✉️ Open email</strong>. Everything is filled in for you.</li>
-        <li><strong>Attach your photo</strong>, read the email, then press <strong>Send</strong>.</li>
-      </ol>
-      <details id="report-details">
-        <summary>See the report</summary>
-        <pre id="report-text"></pre>
-      </details>
-      <p class="hint">The DNR may also ask you to fill out their
-        <a href="https://apps.dnr.wi.gov/doclink/forms/1700-056.pdf" target="_blank" rel="noopener">Invasive Plant Report Form</a>.</p>
-      <p><button class="link-button" id="start-over">🔁 Done? Start a new report</button></p>
+      <h2>Learn more from the DNR</h2>
+      <p id="learn-tip"></p>
+      <div class="card">
+        <h3>📍 Where you found it</h3>
+        <p id="spot-text"></p>
+        <p><a id="spot-map" target="_blank" rel="noopener">🗺️ See this spot on a map</a></p>
+        <p class="hint">Want to report it? The DNR will ask for this spot and your photo.
+          <a href="https://dnr.wisconsin.gov/topic/Invasives/report" target="_blank" rel="noopener">How to report to the DNR</a></p>
+      </div>
+      <p><button class="link-button" id="start-over">🔁 Check another plant</button></p>
       <div class="actions">
-        <a id="email-link" class="big button-link" href="#">✉️ Open email</a>
-        <div class="row">
-          <button class="small" data-go="result">← Back</button>
-          <button class="small" id="copy-button">📋 Copy report</button>
-        </div>
+        <a id="dnr-link" class="big button-link" target="_blank" rel="noopener">🌐 Learn more on the DNR website</a>
+        <button class="small" data-go="result">← Back</button>
       </div>
     </section>
   </main>
@@ -122,7 +110,7 @@
   <dialog id="sample-picker">
     <form method="dialog">
       <h2>🧪 Try a sample</h2>
-      <p class="hint">Real plant photos with saved answers. They work without internet, and always in test mode.</p>
+      <p class="hint">Real plant photos with saved answers, so they work without internet.</p>
       <div id="sample-buttons" class="sample-grid"></div>
       <button class="small" value="cancel">Cancel</button>
     </form>
@@ -135,19 +123,19 @@
 
       <h3>What it does</h3>
       <p>It helps you spot plants that might be <strong>invasive</strong> (plants from other places that crowd out
-        Wisconsin's own plants) and report them to the Wisconsin DNR.</p>
+        Wisconsin's own plants) and takes you to the Wisconsin DNR's page about them.</p>
 
       <h3>How to use it</h3>
       <ol>
         <li><strong>Photo:</strong> take a clear, close photo of the leaves or flowers.</li>
         <li><strong>Location:</strong> tap "Find me" or tap the map where the plant is.</li>
         <li><strong>What plant is it?</strong> The Pl@ntNet AI guesses, and we check Wisconsin's invasive plant list.</li>
-        <li><strong>Report:</strong> we write the email. You attach the photo, read it, and press Send.</li>
+        <li><strong>Learn more:</strong> we take you to the DNR's page about your plant, and show where you found it.</li>
       </ol>
 
       <h3>The AI can be wrong</h3>
       <p>That's why we always say <strong>"possible"</strong> and show how sure the AI is.
-        Experts at the DNR make the final call. You can report any plant, even if the app isn't sure.</p>
+        Experts at the DNR make the final call. You can learn about any plant on the DNR's website, even if the app isn't sure.</p>
 
       <h3>Stay safe</h3>
       <p>Don't touch plants you don't know. Wild parsnip and giant hogweed can burn skin, and poison hemlock is very
@@ -157,16 +145,12 @@
       <ul>
         <li>Your <strong>photo</strong> is made smaller and sent through our plant helper to Pl@ntNet to be identified.
           Nothing is saved, and there's no login.</li>
-        <li>Your <strong>location</strong> stays on your phone until you send the email yourself.</li>
+        <li>Your <strong>location</strong> stays on your phone. We show it to you at the end, in case you report the plant to the DNR.</li>
         <li>The <strong>map pictures</strong> come from OpenStreetMap, so they can tell roughly which area you're looking at.</li>
       </ul>
 
-      <h3>Practice or real?</h3>
-      <p>When you see <strong>🧪 Practice</strong> at the top, reports go to a pretend address (test@example.com),
-        so they never bother the DNR. Our team decides when the app sends real reports. Samples are always practice.</p>
-
-      <h3>How reports reach the DNR</h3>
-      <p>The DNR asks people to email <strong>Invasive.Species@wisconsin.gov</strong> with photos.
+      <h3>Reporting to the DNR</h3>
+      <p>This app never sends anything. To report a plant, use the DNR's own way:
         <a href="https://dnr.wisconsin.gov/topic/Invasives/report" target="_blank" rel="noopener">DNR: Report invasive species</a></p>
 
       <h3>Sources and credits</h3>

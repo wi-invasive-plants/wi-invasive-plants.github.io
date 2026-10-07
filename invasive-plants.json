@@ -6,6 +6,7 @@
       "scientificName": "Alliaria petiolata",
       "otherNames": [],
       "commonName": "Garlic mustard",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/GarlicMustard",
       "category": "restricted",
       "why": "It spreads fast through forests and puts chemicals in the soil that hurt native plants and young trees."
     },
@@ -13,6 +14,7 @@
       "scientificName": "Rhamnus cathartica",
       "otherNames": [],
       "commonName": "Common buckthorn",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/CommonBuckthorn",
       "category": "restricted",
       "why": "It grows into thick thickets that stay green late into fall and shade out wildflowers and young trees."
     },
@@ -20,6 +22,7 @@
       "scientificName": "Frangula alnus",
       "otherNames": ["Rhamnus frangula"],
       "commonName": "Glossy buckthorn",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/GlossyBuckthorn",
       "category": "restricted",
       "why": "It forms thick thickets in wetlands and woods that crowd out native plants."
     },
@@ -27,6 +30,7 @@
       "scientificName": "Lythrum salicaria",
       "otherNames": [],
       "commonName": "Purple loosestrife",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/PurpleLoosestrife",
       "category": "restricted",
       "why": "One plant can make millions of seeds, and it chokes the wetlands that ducks, frogs, and turtles need."
     },
@@ -34,6 +38,7 @@
       "scientificName": "Pastinaca sativa",
       "otherNames": [],
       "commonName": "Wild parsnip",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/WildParsnip",
       "category": "restricted",
       "why": "It takes over roadsides and prairies, and its sap can burn skin when the sun hits it.",
       "warning": "Don't touch! The sap can cause painful burns and blisters in sunlight."
@@ -42,6 +47,7 @@
       "scientificName": "Reynoutria japonica",
       "otherNames": ["Fallopia japonica", "Polygonum cuspidatum"],
       "commonName": "Japanese knotweed",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/JapaneseKnotweed",
       "category": "restricted",
       "why": "It grows so strong it can push up through pavement, and its thick patches crowd out plants along rivers."
     },
@@ -49,6 +55,7 @@
       "scientificName": "Lonicera tatarica",
       "otherNames": [],
       "commonName": "Tatarian honeysuckle",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/TatarianHoneysuckle",
       "category": "restricted",
       "why": "This bush honeysuckle leafs out early in spring and shades out the wildflowers below it."
     },
@@ -56,6 +63,7 @@
       "scientificName": "Lonicera morrowii",
       "otherNames": [],
       "commonName": "Morrow's honeysuckle",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/MorrowsHoneysuckle",
       "category": "restricted",
       "why": "This bush honeysuckle forms dense shrubs that crowd out native plants in woods and fields."
     },
@@ -63,6 +71,7 @@
       "scientificName": "Lonicera × bella",
       "otherNames": [],
       "commonName": "Bell's honeysuckle",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/BellsHoneysuckle",
       "category": "restricted",
       "why": "This bush honeysuckle spreads when birds eat its berries, and it shades out plants on the forest floor."
     },
@@ -70,6 +79,7 @@
       "scientificName": "Lonicera maackii",
       "otherNames": [],
       "commonName": "Amur honeysuckle",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/AmurHoneysuckle",
       "category": "depends-on-county",
       "why": "This tall bush honeysuckle grows into thick walls of shrubs that block sunlight from everything underneath."
     },
@@ -77,6 +87,7 @@
       "scientificName": "Centaurea stoebe",
       "otherNames": ["Centaurea maculosa", "Centaurea biebersteinii"],
       "commonName": "Spotted knapweed",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/SpottedKnapweed",
       "category": "restricted",
       "why": "It takes over sunny, dry places like prairies and makes it hard for other plants to grow nearby."
     },
@@ -84,6 +95,7 @@
       "scientificName": "Euphorbia esula",
       "otherNames": [],
       "commonName": "Leafy spurge",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/LeafySpurge",
       "category": "restricted",
       "why": "Its very deep roots make it almost impossible to pull out, and its milky sap can irritate skin."
     },
@@ -91,6 +103,7 @@
       "scientificName": "Celastrus orbiculatus",
       "otherNames": [],
       "commonName": "Oriental bittersweet",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/OrientalBittersweet",
       "category": "restricted",
       "why": "This vine wraps tightly around trees and can strangle them or pull them down."
     },
@@ -98,6 +111,7 @@
       "scientificName": "Ailanthus altissima",
       "otherNames": [],
       "commonName": "Tree of heaven",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/TreeOfHeaven",
       "category": "restricted",
       "why": "It grows very fast, sends up new sprouts from its roots, and is a favorite food of the spotted lanternfly pest."
     },
@@ -105,6 +119,7 @@
       "scientificName": "Rosa multiflora",
       "otherNames": [],
       "commonName": "Multiflora rose",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/MultifloraRose",
       "category": "restricted",
       "why": "It grows into huge thorny thickets that people and animals can't get through."
     },
@@ -112,6 +127,7 @@
       "scientificName": "Hesperis matronalis",
       "otherNames": [],
       "commonName": "Dame's rocket",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/DamesRocket",
       "category": "restricted",
       "why": "It looks like a pretty wildflower, but it spreads into woods and crowds out native flowers."
     },
@@ -119,6 +135,7 @@
       "scientificName": "Elaeagnus umbellata",
       "otherNames": [],
       "commonName": "Autumn olive",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/AutumnOlive",
       "category": "restricted",
       "why": "Birds spread its berries everywhere, and it changes the soil in ways that help it crowd out prairie plants."
     },
@@ -126,6 +143,7 @@
       "scientificName": "Cirsium arvense",
       "otherNames": [],
       "commonName": "Canada thistle",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/CanadaThistle",
       "category": "restricted",
       "why": "Its roots creep underground and pop up as big prickly patches that crowd out other plants."
     },
@@ -133,6 +151,7 @@
       "scientificName": "Dipsacus fullonum",
       "otherNames": ["Dipsacus sylvestris"],
       "commonName": "Common teasel",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/CommonTeasel",
       "category": "restricted",
       "why": "Its big flat leaves smother the plants underneath, and it spreads from roadsides into prairies."
     },
@@ -140,6 +159,7 @@
       "scientificName": "Berberis thunbergii",
       "otherNames": [],
       "commonName": "Japanese barberry",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/JapaneseBarberry",
       "category": "restricted",
       "why": "It forms thorny thickets that deer won't eat, and those thickets can be good homes for ticks."
     },
@@ -147,6 +167,7 @@
       "scientificName": "Vincetoxicum nigrum",
       "otherNames": ["Cynanchum louiseae"],
       "commonName": "Black swallow-wort",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/BlackSwallowWort",
       "category": "depends-on-county",
       "why": "This vine smothers other plants and tricks monarch butterflies into laying eggs where caterpillars can't survive."
     },
@@ -154,6 +175,7 @@
       "scientificName": "Conium maculatum",
       "otherNames": [],
       "commonName": "Poison hemlock",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/PoisonHemlock",
       "category": "depends-on-county",
       "why": "Every part of this plant is very poisonous to people and animals.",
       "warning": "Don't touch it and never eat it! Every part is very poisonous."
@@ -162,6 +184,7 @@
       "scientificName": "Phragmites australis",
       "otherNames": [],
       "commonName": "Phragmites (common reed)",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/Phragmites",
       "category": "depends-on-county",
       "why": "The non-native kind grows in tall, thick walls that take over wetlands, but a native kind looks similar, so experts need to check."
     },
@@ -169,6 +192,7 @@
       "scientificName": "Heracleum mantegazzianum",
       "otherNames": [],
       "commonName": "Giant hogweed",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/GiantHogweed",
       "category": "prohibited",
       "why": "This giant plant crowds out others, and its sap can cause bad burns on skin in sunlight.",
       "warning": "Don't touch! The sap can cause serious burns and blisters in sunlight."
@@ -177,6 +201,7 @@
       "scientificName": "Pueraria montana",
       "otherNames": ["Pueraria lobata"],
       "commonName": "Kudzu",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/Kudzu",
       "category": "prohibited",
       "why": "This vine grows super fast and can cover and smother whole trees."
     },
@@ -184,6 +209,7 @@
       "scientificName": "Persicaria perfoliata",
       "otherNames": ["Polygonum perfoliatum"],
       "commonName": "Mile-a-minute vine",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/MileAMinuteVine",
       "category": "prohibited",
       "why": "This prickly vine grows very fast and smothers other plants under a blanket of leaves."
     },
@@ -191,6 +217,7 @@
       "scientificName": "Microstegium vimineum",
       "otherNames": [],
       "commonName": "Japanese stiltgrass",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/JapaneseStiltgrass",
       "category": "prohibited",
       "why": "It spreads quickly across forest floors and crowds out wildflowers and baby trees."
     },
@@ -198,6 +225,7 @@
       "scientificName": "Lonicera japonica",
       "otherNames": [],
       "commonName": "Japanese honeysuckle",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/JapaneseHoneysuckle",
       "category": "prohibited",
       "why": "This vine climbs over shrubs and small trees and blocks their sunlight."
     },
@@ -205,6 +233,7 @@
       "scientificName": "Reynoutria sachalinensis",
       "otherNames": ["Fallopia sachalinensis", "Polygonum sachalinense"],
       "commonName": "Giant knotweed",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/GiantKnotweed",
       "category": "prohibited",
       "why": "It grows taller than a basketball hoop in thick patches that crowd out plants along rivers."
     },
@@ -212,6 +241,7 @@
       "scientificName": "Ficaria verna",
       "otherNames": ["Ranunculus ficaria"],
       "commonName": "Lesser celandine",
+      "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/LesserCelandine",
       "category": "prohibited",
       "why": "It carpets the forest floor in spring and crowds out native spring wildflowers."
     }

@@ -4,13 +4,13 @@
 
 Invasive plants are plants from other places that spread fast and crowd out Wisconsin's own plants. The Wisconsin DNR (Department of Natural Resources) wants people to report them. But most people don't know what they're looking at, or how to report it.
 
-Our app helps: **take a photo → find out if it might be invasive → send a report to the DNR.**
+Our app helps: **take a photo → find out if it might be invasive → learn about it from the DNR.**
 
 ## How the information flows
 
 ```
- 📷 Photo ──► 📍 Where is it? ──► 🤖 AI guesses the plant ──► 📋 Is it on Wisconsin's list? ──► ✉️ Email to DNR
- (on phone)   (on phone)          (photo → our helper →        (checked on the phone)            (YOU press Send)
+ 📷 Photo ──► 📍 Where is it? ──► 🤖 AI guesses the plant ──► 📋 Is it on Wisconsin's list? ──► 🌐 DNR's page
+ (on phone)   (on phone)          (photo → our helper →        (checked on the phone)            about that plant
                                    Pl@ntNet)
 ```
 
@@ -18,7 +18,7 @@ Our app helps: **take a photo → find out if it might be invasive → send a re
 2. **Location:** the phone's GPS finds you, or the photo already knows where it was taken, or you tap the map.
 3. **AI:** we shrink the photo and send it to our **plant helper**, which passes it to **Pl@ntNet**, a plant-identifying AI made by scientists. It sends back its 3 best guesses and how sure it is about each.
 4. **List check:** we look up each guess in our list of 30 Wisconsin invasive plants.
-5. **Report:** we write an email to the DNR for you. **You** attach the photo, read it, and press Send.
+5. **Learn more:** a button opens the DNR's own page about your plant. We also show where you found it, in case you want to report it to the DNR.
 
 ## What each file does
 
@@ -39,7 +39,6 @@ Our app helps: **take a photo → find out if it might be invasive → send a re
 - **Prohibited:** not common in Wisconsin yet. If we find it early, the DNR can stop it. These reports matter most!
 - **Restricted:** already common in parts of Wisconsin. It's against the law to sell it, move it, or plant it.
 - **Confidence ("% sure"):** how sure the AI is about its guess. Under 20%, we say "The AI isn't sure."
-- **Practice mode:** when the app shows 🧪 Practice, reports go to a pretend address, so practice never bothers the real DNR. Only our team can switch the app to real reports (one line in `app.js`). Users can't, so nobody sends a real report by accident.
 - **API key:** like a library card for the plant AI. It lets us use Pl@ntNet, up to 500 checks a day. It's a secret, so only our plant helper has it.
 - **Plant helper:** a tiny program in the cloud that holds the key, like a locker. The app asks the helper, and the helper asks Pl@ntNet.
 
@@ -57,14 +56,14 @@ It stays on your phone until the AI step. Then a smaller copy goes through our p
 **Why no login?**
 A login means storing people's names and passwords, and keeping those safe is a big job. Our app doesn't need to know who you are to help find invasive plants, so we left it out. Safer and simpler!
 
-**How does the DNR get the report?**
-The DNR asks people to email Invasive.Species@wisconsin.gov. Our app writes that email for you: plant name, how sure the AI was, date, location, a map link, and your notes. **You** attach the photo, read it, and press Send. The app never sends anything by itself. While the app is in practice mode, it goes to a pretend address instead. Our team decides when the app sends real reports.
+**How does this help the DNR?**
+Our app sends people to the DNR's own page about their plant, so they learn the DNR's real advice: how to spot it, why it's a problem, and how to get rid of it. The app shows where the plant was found, and links to the DNR's "Report invasive species" page, so anyone who wants to report it can do it the DNR's way. Our app never sends anything by itself.
 
 **How would you make it better?**
 - Add more plants to the list (the law lists over 100!)
 - Figure out the county, so we can say "prohibited" or "restricted" exactly
 - Work fully offline, even after the phone closes the app
-- Attach the photo to the email automatically
+- Help people send a report straight to the DNR, with the photo and location filled in
 - Add our own team photos as samples
 - Work in other states, using their invasive plant lists
 

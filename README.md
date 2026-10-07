@@ -1,8 +1,8 @@
 # Invasive Plant Reporter
 
-A phone-friendly web app for a FIRST LEGO League Innovation Project. Take a photo of a plant, mark where it is, find out if it might be a Wisconsin invasive plant, and send a report to the Wisconsin DNR.
+A phone-friendly web app for a FIRST LEGO League Innovation Project. Take a photo of a plant, mark where it is, find out if it might be a Wisconsin invasive plant, and go to the Wisconsin DNR's page about it to learn more.
 
-**How it works:** Photo → Location → AI identifies the plant → check Wisconsin's invasive list → you review and send an email to the DNR.
+**How it works:** Photo → Location → AI identifies the plant → check Wisconsin's invasive list → open the DNR's page about that plant. The app never sends anything to the DNR.
 
 ```
  📱 app ──photo──► 🔒 plant helper (Cloudflare, holds the secret key) ──► 🌿 Pl@ntNet AI
@@ -79,26 +79,13 @@ The plant helper is `plant-helper.js`: a tiny program that runs on Cloudflare, n
 - **Remaining risk:** a determined person could write a program that pretends to be our website and use the helper to identify plants. That uses up our 500 free checks for the day, and then the app says "We used up today's free plant checks." They still can't see the key, and there's no money involved on free plans. For extra protection, an adult can add a Cloudflare rate-limiting rule.
 - **Photos pass through Cloudflare** on their way to Pl@ntNet. The helper doesn't save them (you can read every line of `plant-helper.js`).
 
-## Practice or real (our team controls this)
+## Learning more from the DNR (step 4)
 
-People using the app **can't** switch between practice and real. Our team decides, with one line in `app.js`:
+The last screen sends people to the **Wisconsin DNR's own page about their plant**, for example [Garlic mustard](https://dnr.wisconsin.gov/topic/Invasives/fact/GarlicMustard). Each plant in `invasive-plants.json` has a `dnrPage` link. If the plant isn't on our list, the button goes to the DNR's main [invasive species page](https://dnr.wisconsin.gov/topic/Invasives).
 
-```js
-const PRACTICE_SITE = true;   // true = practice, false = real reports to the DNR
-```
+The last screen also shows **where the plant was found** (coordinates and a map link), plus a link to the DNR's [Report invasive species](https://dnr.wisconsin.gov/topic/Invasives/report) page. That way, anyone who wants to report the plant can do it the DNR's own way, with the location ready.
 
-- **`true` (now): practice.** Every report email goes to `test@example.com`, an address that's reserved so it can never reach anyone. A small yellow **🧪 Practice** tag shows in the header.
-- **`false`: real.** Report emails go to the Wisconsin DNR, and the Practice tag disappears. The report screen always says exactly where the email will go.
-- **To switch:** change the line, then run `git commit -am "Switch to real reports"` and `git push`. The website updates in about a minute. GitHub keeps a record of who switched it and when.
-- **Team practice link:** add `?practice` to the address (`https://wi-invasive-plants.github.io/?practice`) to force practice mode, even when the site is real. It only works in the safe direction: it can turn practice **on**, never off.
-- **Samples are always practice.**
-- **Nothing is ever sent automatically.** The app opens a pre-filled email, and a person attaches the photo, reads it, and presses Send.
-
-## Reporting to the DNR
-
-The Wisconsin DNR asks the public to report invasive plants by emailing **Invasive.Species@wisconsin.gov**, with photos, and optionally its [Invasive Plant Report Form 1700-056](https://apps.dnr.wi.gov/doclink/forms/1700-056.pdf). Source: [DNR "Report invasive species" page](https://dnr.wisconsin.gov/topic/Invasives/report).
-
-The email the app writes includes: the plant name (AI guess), how sure the AI was, whether it's on the NR 40 list, the other guesses, date and time, latitude/longitude, a map link, and your notes. Email links can't attach files by themselves, so the report screen has a **Save photo** button and reminds you to attach the photo.
+**The app never sends anything to the DNR:** no emails and no forms. People decide for themselves whether to report.
 
 ## Demo mode (samples)
 
@@ -131,7 +118,7 @@ Samples work with **no internet and no helper**. The app loads them as soon as i
 
 | File | What it does |
 |---|---|
-| `index.html` | The four screens (Photo → Location → Result → Report) plus the About box and sample picker |
+| `index.html` | The four screens (Photo → Location → What plant is it? → Learn more) plus the About box and sample picker |
 | `style.css` | Colors, big buttons, phone layout |
 | `app.js` | Everything the app does, in 10 labeled sections |
 | `invasive-plants.json` | The Wisconsin invasive plant list |
@@ -167,13 +154,14 @@ Each library has an `integrity` fingerprint in `index.html`. The browser refuses
 **When we say "possible invasive":** if any of the AI's top 3 guesses is on the list **and** the AI is at least 20% sure about that guess. Below 20%, we say "The AI isn't sure." Either way, you can still report it.
 
 ### Add a plant
-1. Find it in NR 40.04(2)(b) (prohibited) or NR 40.05(2)(b) (restricted). If it's in both, use `depends-on-county`.
+1. Find it in NR 40.04(2)(b) (prohibited) or NR 40.05(2)(b) (restricted). If it's in both, use `depends-on-county`. Then find its page on the DNR website (they look like `https://dnr.wisconsin.gov/topic/Invasives/fact/PlantName`).
 2. Add a block inside `"plants": [ ... ]` in `invasive-plants.json`, with a comma between blocks:
    ```json
    {
      "scientificName": "Euphorbia cyparissias",
      "otherNames": [],
      "commonName": "Cypress spurge",
+     "dnrPage": "https://dnr.wisconsin.gov/topic/Invasives/fact/CypressSpurge",
      "category": "restricted",
      "why": "One short sentence a 4th grader can read."
    }

@@ -1,14 +1,14 @@
 // ============================================================
 // Invasive Plant Reporter
-// Sections: 1 Screens · 2 Practice or real · 3 Photo · 4 Location · 5 Invasive list
-//           6 Plant ID · 7 Result · 8 Report · 9 Samples · 10 Start
+// Sections: 1 Screens · 2 Buttons · 3 Photo · 4 Location · 5 Invasive list
+//           6 Plant ID · 7 Result · 8 Learn more · 9 Samples · 10 Start
 // ============================================================
 
 
 // ===== 1. Screens =====
 
 // The names of our four screens, in order.
-const SCREENS = ["photo", "location", "result", "report"];
+const SCREENS = ["photo", "location", "result", "learn"];
 
 // Show one screen and hide all the others. Some screens need to get ready first.
 function showScreen(name) {
@@ -18,7 +18,7 @@ function showScreen(name) {
   window.scrollTo(0, 0);
   if (name === "location") showMap();
   if (name === "result") identifyPhoto();
-  if (name === "report") updateReport();
+  if (name === "learn") updateLearnScreen();
 }
 
 // Make every button with a data-go="..." move to that screen when tapped.
@@ -29,42 +29,21 @@ function setUpNavButtons() {
 }
 
 
-// ===== 2. Practice or real =====
-
-// Where reports go. Practice uses example.com, a made-up address that can never reach anyone.
-const TEST_EMAIL = "test@example.com";
-const DNR_EMAIL = "Invasive.Species@wisconsin.gov";
-
-// OUR TEAM decides this, not the people using the app.
-// true  = practice: every report goes to test@example.com.
-// false = real: reports go to the Wisconsin DNR.
-// Change it only when the team is ready for real reports, then push to GitHub.
-const PRACTICE_SITE = true;
-
-// Practice if the whole site is in practice, or if the address ends with "?practice" (our team's practice link).
-function startsInPractice() {
-  return PRACTICE_SITE || new URLSearchParams(location.search).has("practice");
-}
-
-// Is this report practice? Samples always are.
-let testMode = startsInPractice();
-
-// Show the small "Practice" tag in the header when reports go to the test address.
-function showModeTag() {
-  document.getElementById("mode-tag").hidden = !testMode;
-}
+// ===== 2. Buttons =====
 
 // Open the About box (how the app works, where data goes, credits).
 function openAbout() {
   document.getElementById("about").showModal();
 }
 
-// Hook up the About and sample buttons.
-function setUpTopButtons() {
+// Hook up the buttons that work on any screen: About, samples, Try again, and Check another plant.
+function setUpButtons() {
   document.getElementById("about-button").addEventListener("click", openAbout);
   document.getElementById("intro-about").addEventListener("click", openAbout);
   document.getElementById("sample-button").addEventListener("click", openSamples);
-  showModeTag();
+  document.getElementById("retry-button").addEventListener("click", identifyPhoto);
+  document.getElementById("start-over").addEventListener("click", startOver);
+  document.getElementById("gps-button").addEventListener("click", findMe);
 }
 
 
@@ -130,8 +109,8 @@ const LOCATION_WORDS = {
   sample: "🧪 This is where the sample plant was found.",
 };
 
-// The same thing in report words, so the DNR knows how we got the location.
-const LOCATION_REPORT_WORDS = {
+// The same thing in short words, for the "Where you found it" box at the end.
+const LOCATION_SOURCE_WORDS = {
   gps: "from phone GPS",
   photo: "from GPS saved in the photo",
   map: "picked on a map",
@@ -391,11 +370,8 @@ function showResult() {
   card.hidden = false;
   showGuesses();
   const next = document.getElementById("result-next");
-  next.textContent = decision.kind === "invasive" ? "✉️ Report to DNR" : "Report it anyway →";
   next.hidden = false;
-  showResultTip(decision.kind === "invasive"
-    ? "Read the card, then tap Report to DNR so experts can check it."
-    : "Read the card. Not sure? You can still report it.");
+  showResultTip("Read the card, then tap Learn more.");
 }
 
 // Fill the card for a possible invasive plant.
@@ -424,7 +400,7 @@ function fillOtherCard(card, { kind, guess }) {
     if (kind === "not-listed") addText(card, "p", "That plant isn't on our list of Wisconsin invasive plants.");
     if (kind === "not-sure") addText(card, "p", "That's a low score. A closer photo of the leaves or flowers can help.");
   }
-  addText(card, "p", "Not sure? You can still report it.", "hint");
+  addText(card, "p", "Not sure? Tap Learn more to see the DNR's tips.", "hint");
 }
 
 // Show the AI's top guesses, each with a bar showing how sure it is.
@@ -445,65 +421,29 @@ function showGuesses() {
 }
 
 
-// ===== 8. Report =====
+// ===== 8. Learn more =====
 
-// Write the report text from everything we know.
-function reportText() {
-  const { guess, plant } = decision || {};
-  const lines = ["Possible invasive plant report", ""];
-  lines.push("Plant (AI guess): " + (guess ? `${guess.commonName} (${guess.scientificName})` : "Unknown. The AI couldn't tell."));
-  if (guess) lines.push("How sure the AI was: " + percent(guess.score));
-  lines.push("On Wisconsin's NR 40 invasive list: " + (plant ? "Yes, " + plant.category.replace(/-/g, " ") : "No match. Reporting to be safe."));
-  const others = (guesses || []).filter((g) => g !== guess).map((g) => `${g.commonName} (${g.scientificName}) ${percent(g.score)}`);
-  if (others.length) lines.push("Other AI guesses: " + others.join("; "));
-  lines.push("Date and time: " + new Date().toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" }));
-  if (plantLocation) {
-    const { lat, lon, source } = plantLocation;
-    lines.push(`Location: ${lat.toFixed(5)}, ${lon.toFixed(5)} (${LOCATION_REPORT_WORDS[source]})`);
-    lines.push(`Map: https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`);
-  }
-  const notes = document.getElementById("report-notes").value.trim();
-  lines.push("Notes: " + (notes || "(none)"), "");
-  lines.push("Photo: attached to this email.");
-  lines.push("The plant name is a guess from the Pl@ntNet AI and may be wrong. Please check.");
-  return lines.join("\n");
+// The DNR's main page about invasive species, for plants that aren't on our list.
+const DNR_INVASIVES_PAGE = "https://dnr.wisconsin.gov/topic/Invasives";
+
+// Fill in the last screen: a button to the right DNR page, and where the plant was found.
+function updateLearnScreen() {
+  const plant = decision && decision.plant;
+  const link = document.getElementById("dnr-link");
+  link.href = plant ? plant.dnrPage : DNR_INVASIVES_PAGE;
+  link.textContent = plant ? `🌐 ${plant.commonName} on the DNR website` : "🌐 Invasive plants on the DNR website";
+  document.getElementById("learn-tip").textContent = plant
+    ? `The DNR has a page all about ${plant.commonName}: how to spot it and how to get rid of it.`
+    : "This plant isn't on our invasive list. The DNR's page shows which invasive plants to watch for.";
+  showSpot();
 }
 
-// Update everything on the report screen: who it goes to, the email link, the photo link, and the text.
-function updateReport() {
-  const to = testMode ? TEST_EMAIL : DNR_EMAIL;
-  const name = decision && decision.guess ? decision.guess.commonName : "unknown plant";
-  const subject = (testMode ? "[TEST] " : "") + "Possible invasive plant: " + name;
-  const text = reportText();
-  document.getElementById("report-text").textContent = text;
-  document.getElementById("email-link").href =
-    `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
-  document.getElementById("report-to").textContent = testMode
-    ? `🧪 Test mode is ON. This email goes to ${TEST_EMAIL}, not the DNR.`
-    : `📮 This email goes to the Wisconsin DNR (${DNR_EMAIL}).`;
-  document.getElementById("report-to").className = testMode ? "mode-note test" : "mode-note real";
-  document.getElementById("save-photo").href = document.getElementById("photo-preview").src;
-}
-
-// Copy the report so it can be pasted anywhere (like a text message or the DNR form).
-async function copyReport() {
-  const button = document.getElementById("copy-button");
-  try {
-    await navigator.clipboard.writeText(reportText());
-    button.textContent = "✅ Copied!";
-  } catch {
-    button.textContent = "Copy by hand ↑";
-    document.getElementById("report-details").open = true; // show the text so it can be selected
-  }
-  setTimeout(() => (button.textContent = "📋 Copy report"), 3000);
-}
-
-// Hook up the report screen's buttons and notes box.
-function setUpReport() {
-  document.getElementById("report-notes").addEventListener("input", updateReport);
-  document.getElementById("copy-button").addEventListener("click", copyReport);
-  document.getElementById("start-over").addEventListener("click", startOver);
-  document.getElementById("retry-button").addEventListener("click", identifyPhoto);
+// Show where the plant was found, with a map link, so it's ready if someone reports it.
+function showSpot() {
+  if (!plantLocation) return;
+  const { lat, lon, source } = plantLocation;
+  document.getElementById("spot-text").textContent = `${lat.toFixed(5)}, ${lon.toFixed(5)} (${LOCATION_SOURCE_WORDS[source]})`;
+  document.getElementById("spot-map").href = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`;
 }
 
 
@@ -554,8 +494,6 @@ function openSamples() {
 
 // Use a sample: its photo, its location, and its saved AI answer (so no internet is needed).
 function useSample(sample) {
-  testMode = true; // samples are always practice
-  showModeTag();
   usePhoto(sample.file);
   guesses = sample.guesses;
   guessesFor = sample.file;
@@ -569,11 +507,9 @@ function useSample(sample) {
 // The first tips on the photo and map screens, saved when the app opens so "Start over" can put them back.
 const FIRST_TIPS = {};
 
-// Clear everything for a new report. (We don't reload the page, so this works without internet.)
+// Clear everything to check another plant. (We don't reload the page, so this works without internet.)
 function startOver() {
   photoFile = guesses = guessesFor = plantLocation = decision = null;
-  testMode = startsInPractice(); // back to the site's normal mode
-  showModeTag();
   if (pin) pin.remove();
   pin = null;
   if (map) map.setView(WISCONSIN_CENTER, 6);
@@ -584,7 +520,6 @@ function startOver() {
   document.getElementById("location-next").hidden = true;
   document.getElementById("photo-camera-label").className = "big";
   document.getElementById("gps-button").className = "big";
-  document.getElementById("report-notes").value = "";
   for (const id in FIRST_TIPS) document.getElementById(id).innerHTML = FIRST_TIPS[id];
   showScreen("photo");
 }
@@ -593,10 +528,8 @@ function startOver() {
 function start() {
   for (const id of ["photo-tip", "location-tip"]) FIRST_TIPS[id] = document.getElementById(id).innerHTML;
   setUpNavButtons();
-  setUpTopButtons();
+  setUpButtons();
   setUpPhotoButtons();
-  setUpReport();
-  document.getElementById("gps-button").addEventListener("click", findMe);
   loadInvasiveList();
   loadSamples();
   showScreen("photo");
