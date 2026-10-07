@@ -13,13 +13,13 @@ A FIRST LEGO League team (kids ages 9–14) building their Innovation Project. T
 
 ## Safety and privacy
 - This repo will be PUBLIC (free GitHub Pages hosting). Never put names, school, team name, addresses, or anyone's location in code, comments, commits, or sample data.
-- Never commit API keys. Explain where the key lives and its risk.
-- TEST MODE stays ON by default. Nothing ever goes to the real DNR during practice.
-- Never auto-submit reports. The user always reviews and sends.
+- Never commit API keys. The Pl@ntNet key lives only in Cloudflare, as the `PLANTNET_KEY` secret of the `plant-helper` worker. Explain where the key lives and its risk.
+- The app never sends anything to the DNR (no email, no forms). Step 4 links to the DNR's own page about the plant; people report through the DNR's own channel if they choose.
 
 ## Running it
-- Local: `python -m http.server` then open http://localhost:8000
-- Phone testing: GitHub Pages (HTTPS is required for camera and GPS)
+- Local: `python3 -m http.server` then open http://localhost:8000
+- Live: https://wi-invasive-plants.github.io (GitHub Pages; HTTPS is required for camera and GPS). Pushing to `main` updates it.
+- Plant helper: `plant-helper.js` runs on Cloudflare Workers at https://plant-helper.wi-invasive-plants.workers.dev. After changing it, redeploy it in Cloudflare.
 
 ## Living docs
 - Keep README.md (how to run/deploy) and EXPLAIN.md (kid-level explanation and judge Q&A) up to date whenever the code changes.

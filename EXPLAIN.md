@@ -32,6 +32,8 @@ Our app helps: **take a photo → find out if it might be invasive → learn abo
 | `samples/` | 4 real plant photos with the AI's real saved answers, so our demo works without Wi-Fi. |
 | `README.md` | Instructions for grown-ups: running the app, putting it online, adding plants. |
 | `EXPLAIN.md` | This file! |
+| `claude.md` | Rules we gave the AI coding helper that helped us build the app (like "keep it simple" and "never put names in the code"). |
+| `.gitignore` | A list of files that should never be uploaded to GitHub. |
 
 ## Words to know
 
@@ -48,13 +50,16 @@ Our app helps: **take a photo → find out if it might be invasive → learn abo
 Pl@ntNet learned from millions of plant photos that scientists and regular people labeled. It looks for patterns, like leaf shape and flower color, and compares them to what it learned. Then it gives its top guesses and a score for how sure it is.
 
 **What if it's wrong?**
-It can be wrong! That's why we always say "**possible** invasive plant" and show how sure the AI is. If it's less than 20% sure, we say "The AI isn't sure." A real expert at the DNR makes the final decision. Even if the app says it's not invasive, you can still report it.
+It can be wrong! That's why we always say "**possible** invasive plant" and show how sure the AI is. If it's less than 20% sure, we say "The AI isn't sure." A real expert at the DNR makes the final decision. Whatever the app says, **Learn more** takes you to the DNR's website, and you can report any plant there.
 
 **Where does my photo go?**
-It stays on your phone until the AI step. Then a smaller copy goes through our plant helper to Pl@ntNet to be identified. The helper only passes it along and saves nothing (you can read all of its code in `plant-helper.js`). There's no database, so we never keep your photo. Your location stays on your phone until **you** send the email. (Drawing the map means downloading map pictures of your area from OpenStreetMap.)
+It stays on your phone until the AI step. Then a smaller copy goes through our plant helper to Pl@ntNet to be identified. The helper only passes it along and saves nothing (you can read all of its code in `plant-helper.js`). There's no database, so we never keep your photo. Your location stays on your phone. We show it to you on the last screen, in case you want to report the plant to the DNR yourself. (Drawing the map means downloading map pictures of your area from OpenStreetMap.)
 
 **Why no login?**
 A login means storing people's names and passwords, and keeping those safe is a big job. Our app doesn't need to know who you are to help find invasive plants, so we left it out. Safer and simpler!
+
+**Why don't you send reports to the DNR?**
+Sending reports means the DNR gets emails from every practice run and every wrong guess. Instead, we take people to the DNR's own page about their plant, so they learn the facts first. If they still want to report it, the DNR's website shows them the official way.
 
 **How does this help the DNR?**
 Our app sends people to the DNR's own page about their plant, so they learn the DNR's real advice: how to spot it, why it's a problem, and how to get rid of it. The app shows where the plant was found, and links to the DNR's "Report invasive species" page, so anyone who wants to report it can do it the DNR's way. Our app never sends anything by itself.

@@ -20,6 +20,17 @@ A phone-friendly web app for a FIRST LEGO League Innovation Project. Take a phot
 
 The Pl@ntNet key is stored **only** in Cloudflare, as the `PLANTNET_KEY` secret of the `plant-helper` worker. `ALLOWED_SITES` is `https://wi-invasive-plants.github.io,http://localhost:8000`.
 
+## Using the app
+
+| Step | What you see | What you do |
+|---|---|---|
+| 1. Photo | A short welcome note, then **📷 Take photo** / **🖼️ My photos** | Take or pick a clear, close photo. No plant nearby? Tap **🧪 No plant nearby? Try a sample**. |
+| 2. Where is it? | A map of Wisconsin | Tap **📍 Find me** (GPS), or tap the map. If the photo has GPS saved inside, the pin drops by itself. |
+| 3. What plant is it? | "Asking the plant AI…", then a card: **⚠️ Possible invasive plant!**, **✅ Not on Wisconsin's invasive list**, or **🤔 The AI isn't sure**, plus the AI's top 3 guesses | Read the card. Dangerous plants show a red **Don't touch!** warning. Tap **Learn more →**. |
+| 4. Learn more from the DNR | A big button to the DNR's page about that plant, and **📍 Where you found it** (coordinates + map link) | Tap the button to read the DNR's advice. To report the plant, use the DNR's **How to report** link. **🔁 Check another plant** starts over. |
+
+The **ℹ️** button (top right) opens the **About** box: how to use the app, why the AI can be wrong, staying safe, where photos and locations go, and all sources and photo credits.
+
 ## Run it on a laptop
 
 1. Open Terminal in this folder.
@@ -72,6 +83,9 @@ The plant helper is `plant-helper.js`: a tiny program that runs on Cloudflare, n
 
 **Optional:** the helper calls Pl@ntNet from a server, not from a web page, so it doesn't need Pl@ntNet's "expose my API key" or "Authorized domains" settings. You can turn those off at my.plantnet.org. If the app then says the helper's key isn't working, turn "expose my API key" back on.
 
+### Updating the plant helper
+`plant-helper.js` on GitHub is just a copy for reading. The one that runs lives in Cloudflare. If you change it, paste the new version into Cloudflare (**Workers & Pages → plant-helper → Edit code → Deploy**). Your `PLANTNET_KEY` and `ALLOWED_SITES` settings stay as they are.
+
 ### Where the key lives, and the risk
 - **The key is only inside Cloudflare,** stored as an encrypted secret. It's not in the code, not on GitHub, and not on any phone, and the helper never sends it back.
 - **To change the key,** update `PLANTNET_KEY` in Cloudflare. Every phone keeps working, with nothing to change.
@@ -89,7 +103,7 @@ The last screen also shows **where the plant was found** (coordinates and a map 
 
 ## Demo mode (samples)
 
-The first screen shows **Try a sample** buttons: garlic mustard (invasive), wild parsnip (invasive, burns skin), golden Alexanders (its native look-alike), and common milkweed (native). Each one has:
+On the first screen, **🧪 No plant nearby? Try a sample** opens a picker with 4 picture buttons: garlic mustard (invasive), wild parsnip (invasive, burns skin), golden Alexanders (its native look-alike), and common milkweed (native). Each one has:
 - **a real photo** from Wikimedia Commons (credits are in the app's ℹ️ About box and in `samples/results.json`), with its hidden data, including any GPS, removed;
 - **the real answer** the Pl@ntNet AI gave for that photo, saved on 2026-10-04;
 - **a location** at a public park or landmark.
@@ -126,6 +140,8 @@ Samples work with **no internet and no helper**. The app loads them as soon as i
 | `samples/` | Sample photos and `results.json` (saved real AI answers + photo credits) |
 | `README.md` | This file |
 | `EXPLAIN.md` | Kid-friendly explanation and judge Q&A |
+| `claude.md` | Rules for the AI coding assistant that helped build the app |
+| `.gitignore` | Files that should never be uploaded to GitHub |
 
 ## Libraries and services we use
 
@@ -151,7 +167,7 @@ Each library has an `integrity` fingerprint in `index.html`. The browser refuses
 
 **How matching works:** we compare only the first two words of the scientific name (genus + species), ignoring capital letters and the hybrid sign `×`. So `Lonicera × bella Zabel` matches `lonicera x bella`. We also check `otherNames`, because scientists sometimes rename plants. For example, NR 40 says *Fallopia japonica*, but Pl@ntNet says *Reynoutria japonica*.
 
-**When we say "possible invasive":** if any of the AI's top 3 guesses is on the list **and** the AI is at least 20% sure about that guess. Below 20%, we say "The AI isn't sure." Either way, you can still report it.
+**When we say "possible invasive":** if any of the AI's top 3 guesses is on the list **and** the AI is at least 20% sure about that guess. Below 20%, we say "The AI isn't sure." Either way, **Learn more** takes you to the DNR's website.
 
 ### Add a plant
 1. Find it in NR 40.04(2)(b) (prohibited) or NR 40.05(2)(b) (restricted). If it's in both, use `depends-on-county`. Then find its page on the DNR website (they look like `https://dnr.wisconsin.gov/topic/Invasives/fact/PlantName`).

@@ -306,12 +306,12 @@ async function identifyPhoto() {
 
 // ===== 7. Result =====
 
-// What we decided about the plant: { kind, guess, plant }. The report uses this.
+// What we decided about the plant: { kind, guess, plant }. The Learn more screen uses this.
 let decision = null;
 
 // What each list category means, in plain words.
 const CATEGORY_WORDS = {
-  prohibited: "PROHIBITED in Wisconsin. It's not common here yet, so your report really matters!",
+  prohibited: "PROHIBITED in Wisconsin. It's not common here yet, so telling the DNR about it really matters!",
   restricted: "RESTRICTED in Wisconsin. It's already found in parts of the state.",
   "depends-on-county": "Prohibited or restricted in Wisconsin, depending on the county.",
 };
